@@ -1,4 +1,4 @@
-console.log("Executed");
+import dotenv from "dotenv";
+dotenv.config();
 
-const person: string = "John";
-const count: number = 100;
+console.log(process.env.PORT);
