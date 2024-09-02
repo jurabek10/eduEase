@@ -1,8 +1,8 @@
 import express from "express";
 const routerAdmin = express.Router();
-import restaurantController from "./controllers/restaurant.controller";
+import academiaController from "./controllers/academia.controller";
 
-routerAdmin.get("/", restaurantController.goHome);
-routerAdmin.get("/login", restaurantController.getLogin);
+routerAdmin.get("/", academiaController.goHome);
+routerAdmin.get("/login", academiaController.getLogin);
 
 export default routerAdmin;
