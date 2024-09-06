@@ -35,18 +35,6 @@ academiaController.getSignup = (req: Request, res: Response) => {
   }
 };
 
-academiaController.processLogin = async (req: Request, res: Response) => {
-  try {
-    console.log("processLogin");
-    const input: LoginInput = req.body;
-    const result = await memberService.processLogin(input);
-    res.send(result);
-  } catch (err) {
-    console.log("Error, processLogin", err);
-    res.send(err);
-  }
-};
-
 academiaController.processSignup = async (req: Request, res: Response) => {
   try {
     console.log("processSignup");
@@ -58,6 +46,18 @@ academiaController.processSignup = async (req: Request, res: Response) => {
     res.send(result);
   } catch (err) {
     console.log("Error, processSignup", err);
+    res.send(err);
+  }
+};
+
+academiaController.processLogin = async (req: Request, res: Response) => {
+  try {
+    console.log("processLogin");
+    const input: LoginInput = req.body;
+    const result = await memberService.processLogin(input);
+    res.send(result);
+  } catch (err) {
+    console.log("Error, processLogin", err);
     res.send(err);
   }
 };

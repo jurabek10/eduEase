@@ -4,6 +4,7 @@ import { Request } from "express";
 import { Session } from "express-session";
 
 export interface Member {
+  toJSON(): Member | PromiseLike<Member>;
   //   toJSON(): Member | PromiseLike<Member>;
   _id: ObjectId;
   memberType: MemberType;
