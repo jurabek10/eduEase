@@ -1,8 +1,9 @@
 <%- include('includes/header') %>
 <body>
   <div>
-    <div>PRODUCTS</div>
-    <div><%=member.memberNick%></div>
+    <% courses.map((value, key) => { %>
+    <p><%= value.courseName %> - <%= value.coursePrice %></p>
+    <% }) %>
   </div>
 </body>
 <%- include('includes/footer') %>

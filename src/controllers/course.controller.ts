@@ -13,7 +13,9 @@ const courseController: T = {};
 courseController.getAllCourses = async (req: Request, res: Response) => {
   try {
     // console.log("getAllProducts");
-    res.render("courses");
+    const data = await courseService.getAllCourses();
+    // console.log("data:", data);
+    res.render("courses", { courses: data });
   } catch (err) {
     console.log("Error, getAllCourses:", err);
     if (err instanceof Errors) res.status(err.code).json(err);

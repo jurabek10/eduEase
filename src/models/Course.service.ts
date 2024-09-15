@@ -15,6 +15,14 @@ class CourseService {
   /** SPA */
 
   /** SSR */
+  public async getAllCourses(): Promise<Course[] | any> {
+    const result = await this.courseModel.find().exec();
+
+    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+
+    return result;
+  }
+
   public async createNewCourse(input: CourseInput): Promise<Course> {
     try {
       return (await this.courseModel.create(input)) as unknown as Course;
