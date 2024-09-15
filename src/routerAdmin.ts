@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 const routerAdmin = express.Router();
 import academiaController from "./controllers/academia.controller";
-import productController from "./controllers/product.controller";
 import makeUploader from "./libs/utils/uploader";
+import courseController from "./controllers/course.controller";
 
 routerAdmin.get("/", academiaController.goHome);
 routerAdmin
@@ -19,21 +19,21 @@ routerAdmin
 routerAdmin.get("/logout", academiaController.logout);
 routerAdmin.get("/check-me", academiaController.checkAuthSession);
 
-/** Product */
+/** Course */
 routerAdmin.get(
   "/product/all",
   academiaController.verifyRestaurant,
-  productController.getAllProducts
+  courseController.getAllProducts
 );
 routerAdmin.post(
   "/product/create",
   academiaController.verifyRestaurant,
   makeUploader("products").array("productImages", 5),
-  productController.createNewProduct
+  courseController.createNewProduct
 );
 routerAdmin.post(
   "/product/:id",
   academiaController.verifyRestaurant,
-  productController.updateChosenProduct
+  courseController.updateChosenProduct
 );
 export default routerAdmin;

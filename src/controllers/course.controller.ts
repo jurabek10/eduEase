@@ -1,12 +1,12 @@
-import ProductService from "../models/Product.service";
 import Errors from "../libs/Errors";
 import { T } from "../libs/types/common";
 import { Request, Response } from "express";
+import CourseService from "../models/Course.service";
 
-const productService = new ProductService();
+const courseService = new CourseService();
 
-const productController: T = {};
-productController.getAllProducts = async (req: Request, res: Response) => {
+const courseController: T = {};
+courseController.getAllProducts = async (req: Request, res: Response) => {
   try {
     // console.log("getAllProducts");
     res.render("courses");
@@ -19,7 +19,7 @@ productController.getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
-productController.createNewProduct = async (req: Request, res: Response) => {
+courseController.createNewProduct = async (req: Request, res: Response) => {
   try {
     console.log("createNewProduct");
     res.send("DONE");
@@ -32,7 +32,7 @@ productController.createNewProduct = async (req: Request, res: Response) => {
   }
 };
 
-productController.updateChosenProduct = async (req: Request, res: Response) => {
+courseController.updateChosenProduct = async (req: Request, res: Response) => {
   try {
     console.log("updateChosenProduct");
   } catch (err) {
@@ -44,4 +44,4 @@ productController.updateChosenProduct = async (req: Request, res: Response) => {
   }
 };
 
-export default productController;
+export default courseController;
