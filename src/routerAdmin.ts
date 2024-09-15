@@ -10,5 +10,7 @@ routerAdmin
 routerAdmin
   .get("/signup", academiaController.getSignup)
   .post("/signup", academiaController.processSignup);
+routerAdmin.get("/logout", academiaController.logout);
+routerAdmin.get("/check-me", academiaController.checkAuthSession);
 
 export default routerAdmin;
