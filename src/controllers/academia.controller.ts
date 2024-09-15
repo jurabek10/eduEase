@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { T } from "../libs/types/common";
 import MemberService from "../models/Member.service";
 import { AdminRequest, LoginInput, MemberInput } from "../libs/types/member";
@@ -40,7 +40,7 @@ academiaController.getSignup = (req: Request, res: Response) => {
 academiaController.processSignup = async (req: AdminRequest, res: Response) => {
   try {
     console.log("processSignup");
-    console.log("body:", req.body);
+    // console.log("body:", req.body);
 
     const newMember: MemberInput = req.body;
     newMember.memberType = MemberType.ACADEMIA;
@@ -105,6 +105,22 @@ academiaController.checkAuthSession = async (
   } catch (err) {
     console.log("Erro, checkAuthSession", err);
     res.send(err);
+  }
+};
+
+academiaController.verifyRestaurant = (
+  req: AdminRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session?.member?.memberType === MemberType.ACADEMIA) {
+    req.member = req.session.member;
+    next();
+  } else {
+    const message = Message.NOT_AUTHENTICATED;
+    res.send(
+      `<script>alert("${message}"); window.location.replace('/admin/login')</script>`
+    );
   }
 };
 
