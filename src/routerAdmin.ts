@@ -21,18 +21,18 @@ routerAdmin.get("/check-me", academiaController.checkAuthSession);
 
 /** Course */
 routerAdmin.get(
-  "/product/all",
+  "/course/all",
   academiaController.verifyRestaurant,
   courseController.getAllProducts
 );
 routerAdmin.post(
-  "/product/create",
+  "/course/create",
   academiaController.verifyRestaurant,
   makeUploader("products").array("productImages", 5),
   courseController.createNewProduct
 );
 routerAdmin.post(
-  "/product/:id",
+  "/course/:id",
   academiaController.verifyRestaurant,
   courseController.updateChosenProduct
 );
