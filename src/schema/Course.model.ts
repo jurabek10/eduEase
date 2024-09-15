@@ -33,7 +33,7 @@ const courseSchema = new Schema(
 
     courseSold: {
       type: Number,
-      required: true,
+      default: 0,
     },
 
     courseDuration: {

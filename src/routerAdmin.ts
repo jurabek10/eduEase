@@ -23,17 +23,17 @@ routerAdmin.get("/check-me", academiaController.checkAuthSession);
 routerAdmin.get(
   "/course/all",
   academiaController.verifyRestaurant,
-  courseController.getAllProducts
+  courseController.getAllCourses
 );
 routerAdmin.post(
   "/course/create",
   academiaController.verifyRestaurant,
-  makeUploader("products").array("productImages", 5),
-  courseController.createNewProduct
+  makeUploader("products").array("courseImages", 5),
+  courseController.createNewCourse
 );
 routerAdmin.post(
   "/course/:id",
   academiaController.verifyRestaurant,
-  courseController.updateChosenProduct
+  courseController.updateChosenCourse
 );
 export default routerAdmin;
