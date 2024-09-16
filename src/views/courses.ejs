@@ -52,24 +52,26 @@
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
+            <% courses.map(function(value, key) { %>
             <tbody style="background: white">
-              <td>1</td>
-              <td>NESTJS</td>
-              <td>IT</td>
-              <td>MARTIN</td>
-              <td>350</td>
-              <td>100</td>
-              <td>50</td>
-              <td>21</td>
+              <td><%= key + 1 %></td>
+              <td><%= value.courseName %></td>
+              <td><%= value.courseCategory %></td>
+              <td><%= value.courseMentor %></td>
+              <td><%= value.coursePrice %></td>
+              <td><%= value.courseSaledPrice %></td>
+              <td><%= value.courseSold %></td>
+              <td><%= value.courseDuration %></td>
               <td>
-                <select class="spec-select new-product-status">
-                  <option value="PAUSE" selected>PAUSE</option>
-                  <option value="PROCESS">PROCESS</option>
-                  <option value="DELETE">DELETE</option>
-                  <option value="SALED">SALED</option>
+                <select class="spec-select new-product-status" id="<%= value._id %>">
+                  <option value="PAUSE" <%= value.courseStatus === 'PAUSE' ? 'selected' : '' %>>PAUSE</option>
+                  <option value="PROCESS" <%= value.courseStatus === 'PROCESS' ? 'selected' : '' %>>PROCESS</option>
+                  <option value="DELETE" <%= value.courseStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
+                  <option value="SALED" <%= value.courseStatus === 'SALED' ? 'selected' : '' %>>SALED</option>
                 </select>
               </td>
             </tbody>
+            <% }) %>
             <!--  LOOP PRODUCTS: END  -->
           </table>
           <div
@@ -82,7 +84,8 @@
           </div>
         </div>
         <form
-          action="/admin/product/create"
+          onsubmit="return validateForm()"
+          action="/admin/course/create"
           method="POST"
           class="dish-container"
           enctype="multipart/form-data"
@@ -146,13 +149,13 @@
                 type="string"
                 placeholder="Mentor Name"
                 name="courseMentor"
-                class="course-mento"
+                class="course-mentor"
               />
             </div>
           </div>
           <div class="long-input">
             <label>Course Description</label>
-            <textarea name="productDesc" class="product-desc"></textarea>
+            <textarea name="courseDesc" class="course-desc"></textarea>
           </div>
 
           <div class="img-frame">
@@ -163,9 +166,10 @@
                 <input
                   type="file"
                   id="file"
-                  name="productImages"
+                  name="courseImages"
                   class="image-one"
                   required
+                  onchange="previewFileHandler(this, 1)"
                 />
               </div>
               <div class="upload-img-box">
@@ -173,8 +177,9 @@
                 <input
                   type="file"
                   id="file"
-                  name="productImages"
+                  name="courseImages"
                   class="image-two"
+                  onchange="previewFileHandler(this, 2)"
                 />
               </div>
               <div class="upload-img-box">
@@ -182,8 +187,9 @@
                 <input
                   type="file"
                   id="file"
-                  name="productImages"
+                  name="courseImages"
                   class="image-three"
+                  onchange="previewFileHandler(this, 3)"
                 />
               </div>
               <div class="upload-img-box">
@@ -191,8 +197,9 @@
                 <input
                   type="file"
                   id="file"
-                  name="productImages"
+                  name="courseImages"
                   class="image-four"
+                  onchange="previewFileHandler(this, 4)"
                 />
               </div>
               <div class="upload-img-box">
@@ -200,8 +207,9 @@
                 <input
                   type="file"
                   id="file"
-                  name="productImages"
+                  name="courseImages"
                   class="image-five"
+                  onchange="previewFileHandler(this, 5)"
                 />
               </div>
               <input name="restaurantIid" class="restaurant-id" hidden />

@@ -34,6 +34,7 @@ const courseSchema = new Schema(
     courseSaledPrice: {
       type: Number,
       required: true,
+      default: 0,
     },
 
     courseSold: {

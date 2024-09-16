@@ -4,6 +4,7 @@ import CourseModel from "../schema/Course.model";
 import { HttpCode } from "../libs/Errors";
 import { Message } from "../libs/Errors";
 import { shapeIntoMongooseObject } from "../libs/config";
+import { CourseStatus } from "../libs/enums/course.enum";
 
 class CourseService {
   private readonly courseModel;
@@ -25,7 +26,10 @@ class CourseService {
 
   public async createNewCourse(input: CourseInput): Promise<Course> {
     try {
-      return (await this.courseModel.create(input)) as unknown as Course;
+      const result = (await this.courseModel.create(
+        input
+      )) as unknown as Course;
+      return result;
     } catch (err) {
       console.error("Error, model: createNewCourse:", err);
       throw new Errors(HttpCode.BAD_REQUEST, Message.CREATED_FAILED);

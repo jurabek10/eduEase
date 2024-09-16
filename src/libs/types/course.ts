@@ -10,7 +10,7 @@ export interface CourseInput {
   coursePrice: number;
   courseSold: number;
   courseDuration: number;
-  courseDesc?: string;
+  courseDesc: string;
   courseImages?: string[];
   courseView?: number;
 }
@@ -22,6 +22,7 @@ export interface Course {
   courseName: string;
   courseMentor: string;
   coursePrice: number;
+  courseSaledPrice: number;
   courseSold: number;
   courseDuration: number;
   courseDesc: string;
