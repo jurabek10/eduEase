@@ -83,7 +83,6 @@ academiaController.processLogin = async (req: AdminRequest, res: Response) => {
     res.send(
       `<script>alert("${message}"); window.location.replace('admin/login1')</script> `
     );
-    res.send(err);
   }
 };
 

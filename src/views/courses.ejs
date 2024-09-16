@@ -1,9 +1,225 @@
 <%- include('includes/header') %>
+
+<link rel="stylesheet" type="text/css" href="/css/courses.css" />
+
 <body>
-  <div>
-    <% courses.map((value, key) => { %>
-    <p><%= value.courseName %> - <%= value.coursePrice %></p>
-    <% }) %>
+  <div class="products-container">
+    <div class="navigation-menu">
+      <ul class="nav justify-content-center">
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link active" href="/admin/">Home</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/course/all">Courses</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/user/all">Users</a>
+        </li>
+        <li
+          class="nav-item"
+          style="cursor: pointer"
+          onclick="return confirm('Do you want to logout?')"
+        >
+          <a class="nav-link" href="/admin/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="restaurant-menu-frame">
+      <div class="board">
+        <div class="dishes-table">
+          <div class="top-wrapper">
+            <span class="new-dish-txt" style="margin-bottom: 30px">
+              COURSES LIST
+            </span>
+            <div class="searching-area">
+              <input type="search" />
+              <button type="button">Search</button>
+            </div>
+          </div>
+          <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+              <tr class="thead-light">
+                <th scope="col">T/r</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Course Category</th>
+                <th scope="col">Course Mentor</th>
+                <th scope="col">Course Price($)</th>
+                <th scope="col">Course Saled Price($)</th>
+                <th scope="col">Courses Sold</th>
+                <th scope="col">Course Duration</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <!--  LOOP PRODUCTS: START  -->
+            <tbody style="background: white">
+              <td>1</td>
+              <td>NESTJS</td>
+              <td>IT</td>
+              <td>MARTIN</td>
+              <td>350</td>
+              <td>100</td>
+              <td>50</td>
+              <td>21</td>
+              <td>
+                <select class="spec-select new-product-status">
+                  <option value="PAUSE" selected>PAUSE</option>
+                  <option value="PROCESS">PROCESS</option>
+                  <option value="DELETE">DELETE</option>
+                  <option value="SALED">SALED</option>
+                </select>
+              </td>
+            </tbody>
+            <!--  LOOP PRODUCTS: END  -->
+          </table>
+          <div
+            class="long-input"
+            style="align-items: flex-end; margin-bottom: 25px"
+          >
+            <button class="btn btn-primary" id="process-btn">
+              New Product
+            </button>
+          </div>
+        </div>
+        <form
+          action="/admin/product/create"
+          method="POST"
+          class="dish-container"
+          enctype="multipart/form-data"
+        >
+          <div class="long-input" style="display: flex; align-items: center">
+            <span class="new-dish-txt">NEW COURSE DETAIL</span>
+          </div>
+          <div class="login-input-frame">
+            <div class="long-input">
+              <label>Course Name</label>
+              <input
+                type="text"
+                placeholder="Name"
+                name="courseName"
+                class="product-name"
+              />
+            </div>
+            <input
+              name="courseStatus"
+              value="PAUSE"
+              class="product-status"
+              hidden
+            />
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>Course Price</label>
+              <input
+                type="number"
+                placeholder="Price"
+                name="coursePrice"
+                class="product-price"
+              />
+            </div>
+            <div class="half-input">
+              <label>Course Duration</label>
+              <input
+                type="number"
+                placeholder="Counts"
+                name="courseDuration"
+                class="course-duration"
+              />
+            </div>
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>Course Category</label>
+              <select class="course-category" name="courseCategory">
+                <option value="BUSINESS" selected>Business</option>
+                <option value="FINANCE">Finance</option>
+                <option value="IT">IT</option>
+                <option value="MARKETING">Marketing</option>
+                <option value="MUSIC">Music</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div class="half-input">
+              <label>Course Mentor</label>
+              <input
+                type="string"
+                placeholder="Mentor Name"
+                name="courseMentor"
+                class="course-mento"
+              />
+            </div>
+          </div>
+          <div class="long-input">
+            <label>Course Description</label>
+            <textarea name="productDesc" class="product-desc"></textarea>
+          </div>
+
+          <div class="img-frame">
+            <label>Course Images</label>
+            <div class="media-frame">
+              <div class="upload-img-box">
+                <img src="/img/upload.svg" class="1" id="image-section-1" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-one"
+                  required
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/upload.svg" class="2" id="image-section-2" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-two"
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/upload.svg" class="3" id="image-section-3" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-three"
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/upload.svg" class="4" id="image-section-4" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-four"
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/img/upload.svg" class="5" id="image-section-5" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-five"
+                />
+              </div>
+              <input name="restaurantIid" class="restaurant-id" hidden />
+            </div>
+          </div>
+
+          <div class="operation-buttons">
+            <button class="btn btn-danger" id="cancel-btn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="create-btn">
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+  <script type="text/javascript" src="/js/products.js"></script>
 </body>
+
 <%- include('includes/footer') %>

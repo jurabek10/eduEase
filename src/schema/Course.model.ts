@@ -31,6 +31,11 @@ const courseSchema = new Schema(
       required: true,
     },
 
+    courseSaledPrice: {
+      type: Number,
+      required: true,
+    },
+
     courseSold: {
       type: Number,
       default: 0,
@@ -43,7 +48,6 @@ const courseSchema = new Schema(
 
     courseDesc: {
       type: String,
-      required: true,
     },
 
     courseImages: {
