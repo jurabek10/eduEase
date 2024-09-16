@@ -36,4 +36,17 @@ routerAdmin.post(
   academiaController.verifyRestaurant,
   courseController.updateChosenCourse
 );
+
+/* User */
+routerAdmin.get(
+  "/user/all",
+  academiaController.verifyRestaurant,
+  academiaController.getUsers
+);
+
+routerAdmin.post(
+  "/user/edit",
+  academiaController.verifyRestaurant,
+  academiaController.updateChosenUser
+);
 export default routerAdmin;
