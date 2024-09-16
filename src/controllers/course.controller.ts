@@ -46,14 +46,15 @@ courseController.createNewCourse = async (req: AdminRequest, res: Response) => {
     await courseService.createNewCourse(data);
 
     res.send(
-      `<script>alert("Successfull creation!"); window.location.replace('admin/product/all')</script> `
+      `<script>alert("Successfull creation!"); window.location.replace('/admin/course/all')</script> `
     );
   } catch (err) {
-    console.log("Error, createNewCourse:", err);
-    if (err instanceof Errors) res.status(err.code).json(err);
-    else {
-      res.status(Errors.standard.code).json(Errors.standard);
-    }
+    console.log("Error, createNewProduct:", err);
+    const message =
+      err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+    res.send(
+      `<script>alert("${message}"); window.location.replace('/admin/course/all')</script> `
+    );
   }
 };
 

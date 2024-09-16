@@ -61,7 +61,7 @@ academiaController.processSignup = async (req: AdminRequest, res: Response) => {
     const message =
       err instanceof Error ? err.message : Message.SOMETHING_WENT_WRONG;
     res.send(
-      `<script>alert("${message}"); window.location.replace('admin/signup')</script> `
+      `<script>alert("${message}"); window.location.replace('/admin/signup')</script> `
     );
   }
 };
@@ -81,7 +81,7 @@ academiaController.processLogin = async (req: AdminRequest, res: Response) => {
     const message =
       err instanceof Error ? err.message : Message.SOMETHING_WENT_WRONG;
     res.send(
-      `<script>alert("${message}"); window.location.replace('admin/login1')</script> `
+      `<script>alert("${message}"); window.location.replace('/admin/login1')</script> `
     );
   }
 };
