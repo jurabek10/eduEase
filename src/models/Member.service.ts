@@ -7,7 +7,7 @@ import {
 } from "../libs/types/member";
 import { stringify } from "uuid";
 import Errors, { HttpCode, Message } from "../libs/Errors";
-import { MemberType } from "../libs/enums/member.enum";
+import { MemberStatus, MemberType } from "../libs/enums/member.enum";
 import * as bcrypt from "bcryptjs";
 import { shapeIntoMongooseObject } from "../libs/config";
 
@@ -38,8 +38,11 @@ class MemberService {
   public async login(input: LoginInput): Promise<Member> {
     const member = await this.memberModel
       .findOne(
-        { memberNick: input.memberNick },
-        { memberNick: 1, memberPassword: 1 }
+        {
+          memberNick: input.memberNick,
+          memberStatus: { $ne: MemberStatus.DELETE },
+        }, //
+        { memberNick: 1, memberPassword: 1, memberStatus: 1 }
       )
       .exec();
 
