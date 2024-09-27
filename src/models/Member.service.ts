@@ -10,6 +10,7 @@ import Errors, { HttpCode, Message } from "../libs/Errors";
 import { MemberStatus, MemberType } from "../libs/enums/member.enum";
 import * as bcrypt from "bcryptjs";
 import { shapeIntoMongooseObject } from "../libs/config";
+import { Error } from "mongoose";
 
 class MemberService {
   private readonly memberModel;
@@ -69,6 +70,20 @@ class MemberService {
       .findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE })
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+    return result as unknown as Member;
+  }
+
+  public async updateMember(
+    member: Member,
+    input: MemberUpdateInput
+  ): Promise<Member> {
+    const memberId = shapeIntoMongooseObject(member._id);
+    const result = await this.memberModel.findByIdAndUpdate(
+      { _id: memberId },
+      input,
+      { new: true }
+    );
+    if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
     return result as unknown as Member;
   }
 
