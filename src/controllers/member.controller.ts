@@ -16,6 +16,19 @@ const authService = new AuthService();
 
 const memberController: T = {};
 
+memberController.getAcademia = async (req: Request, res: Response) => {
+  try {
+    console.log("getAcademia");
+    const result = await memberService.getAcademia();
+    res.status(HttpCode.OK).json(result);
+  } catch (err) {
+    if (err instanceof Errors) res.status(err.code).json(err);
+    else {
+      res.status(Errors.standard.code).json(Errors.standard);
+    }
+  }
+};
+
 memberController.signup = async (req: Request, res: Response) => {
   try {
     console.log("signup");

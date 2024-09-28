@@ -19,6 +19,14 @@ class MemberService {
   }
 
   /** SPA */
+  public async getAcademia(): Promise<Member> {
+    const result = await this.memberModel
+      .findOne({ memberType: MemberType.ACADEMIA })
+      .exec();
+    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+    return result as unknown as Member;
+  }
+
   public async signup(input: MemberInput): Promise<Member> {
     const salt = await bcrypt.genSalt();
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
@@ -98,6 +106,21 @@ class MemberService {
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.CREATED_FAILED);
     return result as unknown as Member[];
+  }
+
+  public async addUserPoint(member: Member, point: number): Promise<Member> {
+    const memberId = shapeIntoMongooseObject(member._id);
+    return (await this.memberModel
+      .findByIdAndUpdate(
+        {
+          _id: memberId,
+          memberType: MemberType.USER,
+          memberStatus: MemberStatus.ACTIVE,
+        },
+        { $inc: { memberPoints: point } },
+        { new: true }
+      )
+      .exec()) as unknown as Member;
   }
 
   /** SSR */

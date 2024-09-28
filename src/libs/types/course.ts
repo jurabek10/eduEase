@@ -2,6 +2,14 @@ import { ObjectId } from "mongoose";
 
 import { CourseCategory, CourseStatus } from "../enums/course.enum";
 
+export interface CourseInquery {
+  order: string;
+  page: number;
+  limit: number;
+  courseCategory?: CourseCategory;
+  search?: string;
+}
+
 export interface CourseInput {
   courseStatus?: CourseStatus;
   courseCategory: CourseCategory;
