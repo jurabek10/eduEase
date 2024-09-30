@@ -5,7 +5,7 @@ import uploader from "./libs/utils/uploader";
 import courseController from "./controllers/course.controller";
 import orderController from "./controllers/order.controller";
 
-router.get("/member/restaurant", memberController.getAcademia);
+router.get("/member/academia", memberController.getAcademia);
 router.post("/member/login", memberController.login);
 router.post("/member/signup", memberController.signup);
 router.post(
@@ -29,7 +29,7 @@ router.post(
 router.get("/member/top-users", memberController.getTopUsers);
 
 /** PRODUCTS */
-router.get("/product/all", courseController.getCourses);
+router.get("/course/all", courseController.getCourses);
 router.get(
   "/course/:id",
   memberController.retrievAuth,
