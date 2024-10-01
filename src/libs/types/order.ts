@@ -6,10 +6,11 @@ export interface OrderItem {
   itemQuantity: number;
   itemPrice: number;
   orderItem: ObjectId;
-  productId: ObjectId;
+  courseId: ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
+
 export interface Order {
   _id: ObjectId;
   orderTotal: number;
@@ -18,21 +19,25 @@ export interface Order {
   memberId: ObjectId;
   createdAt: Date;
   updatedAt: Date;
+
   // from aggregation
   orderItems: OrderItem[];
   courseData: Course[];
 }
+
 export interface OrderItemInput {
   itemQuantity: number;
   itemPrice: number;
-  productId: ObjectId;
+  courseId: ObjectId;
   orderId?: ObjectId;
 }
+
 export interface OrderInquery {
   page: number;
   limit: number;
   orderStatus: OrderStatus;
 }
+
 export interface OrderUpdateInput {
   orderId: string;
   orderStatus: OrderStatus;

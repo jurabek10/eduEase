@@ -33,20 +33,21 @@ class OrderService {
   ): Promise<Order> {
     // console.log("input:", input);
     const memberId = shapeIntoMongooseObject(member._id);
-    // const courseId = shapeIntoMongooseObject(course._id);
     const amount = input.reduce((accumulator: number, item: OrderItemInput) => {
       return accumulator + item.itemPrice * item.itemQuantity;
     }, 0);
     // const delivery = amount < 100 ? 5 : 0;
     // console.log("values:", amount, delivery);
+
     try {
       const newOrder: Order = (await this.orderModel.create({
         orderTotal: amount,
         // orderDelivery: delivery,
         memberId: memberId,
-        // courseId: courseId,
       })) as unknown as Order;
+
       //   TODO: create order Items
+
       const orderId = newOrder._id;
       //   console.log("orderId:", orderId);
       await this.recordOrderItem(orderId, input);
@@ -63,15 +64,49 @@ class OrderService {
   ): Promise<void> {
     const promisedList = input.map(async (item: OrderItemInput) => {
       item.orderId = orderId;
-      item.productId = shapeIntoMongooseObject(item.productId);
+      item.courseId = shapeIntoMongooseObject(item.courseId);
       await this.orderItemModel.create(item);
-      //   await this.courseService.addSoldPoint(course, 1);
       return "Inserted";
     });
     console.log("promisedList:", promisedList);
     const orderItemsState = await Promise.all(promisedList);
+
     console.log("orderItemsState:", orderItemsState);
   }
+
+  // public async getMyOrders(
+  //   member: Member,
+  //   inquery: OrderInquery
+  // ): Promise<Order[]> {
+  //   const memberId = shapeIntoMongooseObject(member._id);
+  //   const matches = { memberId: memberId, orderStatus: inquery.orderStatus };
+  //   const result = await this.orderModel
+  //     .aggregate([
+  //       { $match: matches },
+  //       { $sort: { updatedAt: -1 } },
+  //       { $skip: (inquery.page - 1) * inquery.limit },
+  //       { $limit: inquery.limit },
+  //       {
+  //         $lookup: {
+  //           from: "orderItems",
+  //           localField: "_id",
+  //           foreignField: "orderId",
+  //           as: "orderItems",
+  //         },
+  //       },
+  //       {
+  //         $lookup: {
+  //           from: "courses",
+  //           localField: "orderItems.courseId",
+  //           foreignField: "_id",
+  //           as: "courseData",
+  //         },
+  //       },
+  //     ])
+  //     .exec();
+  //   if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+  //   return result;
+  // }
 
   public async getMyOrders(
     member: Member,
@@ -79,6 +114,7 @@ class OrderService {
   ): Promise<Order[]> {
     const memberId = shapeIntoMongooseObject(member._id);
     const matches = { memberId: memberId, orderStatus: inquery.orderStatus };
+
     const result = await this.orderModel
       .aggregate([
         { $match: matches },
@@ -93,10 +129,11 @@ class OrderService {
             as: "orderItems",
           },
         },
+
         {
           $lookup: {
             from: "courses",
-            localField: "orderItems.productId",
+            localField: "orderItems.courseId",
             foreignField: "_id",
             as: "courseData",
           },

@@ -15,6 +15,7 @@ const orderSchema = new Schema(
       enum: OrderStatus,
       default: OrderStatus.PAUSE,
     },
+
     memberId: {
       type: Schema.Types.ObjectId,
       required: true,
@@ -23,4 +24,5 @@ const orderSchema = new Schema(
   },
   { timestamps: true, collection: "orders" }
 );
+
 export default mongoose.model("order", orderSchema);
