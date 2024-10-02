@@ -2,6 +2,7 @@ import { ObjectId, Types } from "mongoose";
 import { MemberStatus, MemberType } from "../enums/member.enum";
 import { Request } from "express";
 import { Session } from "express-session";
+import { Course } from "./course";
 
 export interface Member {
   toJSON(): Member | PromiseLike<Member>;
@@ -49,8 +50,8 @@ export interface MemberUpdateInput {
 }
 
 export interface ExtendedRequest extends Request {
-  course(member: Member, body: any, course: any): unknown;
   member: Member;
+  course: Course;
   file: Express.Multer.File;
   files: Express.Multer.File[];
 }

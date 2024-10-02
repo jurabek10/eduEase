@@ -51,3 +51,9 @@ export interface CourseUpdateInput {
   courseImages?: string[];
   courseView?: number;
 }
+
+// export interface ExtendedRequestCourse extends Request {
+//   course: Course;
+//   file: Express.Multer.File;
+//   files: Express.Multer.File[];
+// }
