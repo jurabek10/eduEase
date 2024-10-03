@@ -41,5 +41,5 @@ export interface OrderInquery {
 export interface OrderUpdateInput {
   orderId: string;
   orderStatus: OrderStatus;
-  // courseId: string;
+  courseId: string;
 }

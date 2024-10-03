@@ -145,16 +145,17 @@ class OrderService {
   }
 
   public async updateOrder(
-    course: Course,
+    member: Member,
     input: OrderUpdateInput
   ): Promise<Order> {
-    const courseId = shapeIntoMongooseObject(course._id),
+    const memberId = shapeIntoMongooseObject(member._id),
       orderId = shapeIntoMongooseObject(input.orderId),
       orderStatus = input.orderStatus;
-    const result = await this.orderItemModel
+
+    const result = await this.orderModel
       .findByIdAndUpdate(
         {
-          courseId: courseId,
+          memberId: memberId,
           _id: orderId,
         },
         { orderStatus: orderStatus },
@@ -163,11 +164,12 @@ class OrderService {
       .exec();
 
     if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
+
     // orderStatus PAUSE => PROCESS +1
-    if (orderStatus === OrderStatus.FINISH) {
-      // await this.memberService.addUserPoint(member, 1);
-      await this.courseService.addSoldPoint(course, 1);
+    if (orderStatus === OrderStatus.PROCESS) {
+      await this.memberService.addUserPoint(member, 1);
     }
+    console.log("RESLT=>>>>", result);
     return result as unknown as Order;
   }
 }

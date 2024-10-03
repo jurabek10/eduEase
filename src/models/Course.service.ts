@@ -67,19 +67,19 @@ class CourseService {
     return result as unknown as Course;
   }
 
-  public async addSoldPoint(course: Course, point: number): Promise<Course> {
-    const courseId = shapeIntoMongooseObject(course._id);
-    return (await this.courseModel
-      .findByIdAndUpdate(
-        {
-          _id: courseId,
-          courseStatus: { $in: [CourseStatus.PROCESS, CourseStatus.SALED] },
-        },
-        { $inc: { courseSold: point } },
-        { new: true }
-      )
-      .exec()) as unknown as Course;
-  }
+  // public async addSoldPoint(course: Course, point: number): Promise<Course> {
+  //   const courseId = shapeIntoMongooseObject(course._id);
+  //   return (await this.courseModel
+  //     .findByIdAndUpdate(
+  //       {
+  //         _id: courseId,
+  //         courseStatus: { $in: [CourseStatus.PROCESS, CourseStatus.SALED] },
+  //       },
+  //       { $inc: { courseSold: point } },
+  //       { new: true }
+  //     )
+  //     .exec()) as unknown as Course;
+  // }
 
   /** SSR */
   public async getAllCourses(): Promise<Course[] | any> {
