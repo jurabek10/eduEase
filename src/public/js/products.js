@@ -13,12 +13,14 @@ $(function () {
   $(".new-product-status").on("change", async function (e) {
     const id = e.target.id;
     const courseStatus = $(`#${id}.new-product-status`).val();
+    const courseSaledPrice = $(`#${id}.saled-price`).val();
     console.log("id:", id);
     console.log("productStatus:", courseStatus);
 
     try {
       const response = await axios.post(`/admin/course/${id}`, {
         courseStatus: courseStatus,
+        courseSaledPrice: courseSaledPrice,
       });
       console.log("res:", response);
       const result = response.data;

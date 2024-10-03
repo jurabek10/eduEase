@@ -47,7 +47,7 @@
                 <th scope="col">Course Price($)</th>
                 <th scope="col">Course Saled Price($)</th>
                 <th scope="col">Courses Sold</th>
-                <th scope="col">Course Duration</th>
+                <th scope="col">Course Duration(hours)</th>
                 <th scope="col">Status</th>
               </tr>
             </thead>
@@ -59,7 +59,7 @@
               <td><%= value.courseCategory %></td>
               <td><%= value.courseMentor %></td>
               <td><%= value.coursePrice %></td>
-              <td><%= value.courseSaledPrice %></td>
+              <td class="saled-price"><%= value.courseSaledPrice %></td>
               <td><%= value.courseSold %></td>
               <td><%= value.courseDuration %></td>
               <td>

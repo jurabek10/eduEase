@@ -102,18 +102,80 @@ class CourseService {
     }
   }
 
+  // public async updateChosenCourse(
+  //   id: string,
+  //   input: CourseUpdateInput
+  // ): Promise<Course> {
+  //   id = shapeIntoMongooseObject(id);
+  //   const existingCourse = await this.courseModel.findById(id).exec();
+
+  //   console.log("Input before update:", input);
+
+  //   if (input.courseStatus === CourseStatus.SALED && input.coursePrice) {
+  //     input.courseSaledPrice = 0.8 * input.coursePrice; // 80% of the coursePrice
+  //     console.log("Calculated courseSaledPrice:", input.courseSaledPrice);
+  //   } else {
+  //     console.log("Course is not marked as 'Saled' or coursePrice is missing.");
+  //   }
+
+  //   const result = await this.courseModel
+  //     .findOneAndUpdate(
+  //       { _id: id },
+  //       { $set: input }, // Ensure fields are explicitly updated
+  //       { new: true } // Return the updated document
+  //     )
+  //     .exec();
+
+  //   if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
+  //   console.log("result:", result);
+
+  //   return result as unknown as Course;
+  // }
   public async updateChosenCourse(
     id: string,
     input: CourseUpdateInput
   ): Promise<Course> {
     id = shapeIntoMongooseObject(id);
+
+    // Fetch the current course from the database to get coursePrice
+    const existingCourse = await this.courseModel.findById(id).exec();
+
+    // Check if the course exists
+    if (!existingCourse) {
+      throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+    }
+
+    console.log("Existing course data:", existingCourse);
+
+    // Check if courseStatus is being updated to "Saled" and if coursePrice exists
+    if (
+      input.courseStatus === CourseStatus.SALED &&
+      existingCourse.coursePrice
+    ) {
+      // Calculate 80% of coursePrice for courseSaledPrice
+      input.courseSaledPrice = parseFloat(
+        (existingCourse.coursePrice * 0.2).toFixed(2)
+      );
+
+      console.log("Calculated courseSaledPrice:", input.courseSaledPrice);
+    } else {
+      input.courseSaledPrice = 0;
+    }
+
+    // Apply the update using $set
     const result = await this.courseModel
-      .findOneAndUpdate({ _id: id }, input, {
-        new: true,
-      })
+      .findOneAndUpdate(
+        { _id: id },
+        { $set: input }, // Update courseStatus and courseSaledPrice
+        { new: true } // Return the updated document
+      )
       .exec();
-    if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
-    console.log("result:", result);
+
+    if (!result) {
+      throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
+    }
+
+    console.log("Updated course:", result);
 
     return result as unknown as Course;
   }

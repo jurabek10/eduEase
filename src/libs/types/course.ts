@@ -16,6 +16,7 @@ export interface CourseInput {
   courseName: string;
   courseMentor: string;
   coursePrice: number;
+  courseSaledPrice: number;
   courseSold: number;
   courseDuration: number;
   courseDesc: string;
@@ -45,6 +46,7 @@ export interface CourseUpdateInput {
   courseName?: string;
   courseMentor?: string;
   coursePrice?: number;
+  courseSaledPrice?: number;
   courseSold?: number;
   courseDuration?: number;
   courseDesc?: string;
