@@ -12,12 +12,17 @@ import { shapeIntoMongooseObject } from "../libs/config";
 import { CourseStatus } from "../libs/enums/course.enum";
 import { T } from "../libs/types/common";
 import { ObjectId } from "mongoose";
+import ViewService from "./View.service";
+import { ViewInput } from "../libs/types/views";
+import { ViewGroup } from "../libs/enums/views.enum";
 
 class CourseService {
   private readonly courseModel;
+  viewService: ViewService;
 
   constructor() {
     this.courseModel = CourseModel;
+    this.viewService = new ViewService();
   }
 
   /** SPA */
@@ -64,6 +69,32 @@ class CourseService {
 
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
     // TODO: If authenticated user=> first=> view log creation
+    if (memberId) {
+      // Cchek existence
+      const input: ViewInput = {
+        memberId: memberId,
+        viewrefId: courseId,
+        viewGroup: ViewGroup.PRODUCT,
+      };
+      const existView = await this.viewService.checkViewExistence(input);
+
+      console.log("exist:", !!existView);
+
+      if (!existView) {
+        // Insert View
+        console.log("PLANNING TO INSERT NEW VIEW");
+        await this.viewService.insertMemberView(input);
+
+        // Increase Counts
+        result = await this.courseModel
+          .findByIdAndUpdate(
+            courseId,
+            { $inc: { courseView: +1 } },
+            { new: true }
+          )
+          .exec();
+      }
+    }
     return result as unknown as Course;
   }
 
