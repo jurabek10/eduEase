@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { CourseStatus } from "../libs/enums/course.enum";
 const orderItemSchema = new Schema(
   {
     itemQuantity: {
@@ -10,6 +11,16 @@ const orderItemSchema = new Schema(
       type: Number,
       required: true,
     },
+
+    itemSaledPrice: {
+      type: Number,
+      required: true,
+    },
+
+    // itemStatus: {
+    //   type: CourseStatus,
+    //   required: true,
+    // },
 
     orderId: {
       type: Schema.Types.ObjectId,

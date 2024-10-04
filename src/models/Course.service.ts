@@ -146,6 +146,8 @@ class CourseService {
     }
 
     console.log("Existing course data:", existingCourse);
+    console.log("Existing course Price:", existingCourse.coursePrice);
+    const salePercent = existingCourse.coursePrice <= 80 ? 0.3 : 0.2;
 
     // Check if courseStatus is being updated to "Saled" and if coursePrice exists
     if (
@@ -154,7 +156,7 @@ class CourseService {
     ) {
       // Calculate 80% of coursePrice for courseSaledPrice
       input.courseSaledPrice = parseFloat(
-        (existingCourse.coursePrice * 0.2).toFixed(2)
+        (existingCourse.coursePrice * salePercent).toFixed(2)
       );
 
       console.log("Calculated courseSaledPrice:", input.courseSaledPrice);

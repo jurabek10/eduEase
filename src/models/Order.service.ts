@@ -34,7 +34,9 @@ class OrderService {
     // console.log("input:", input);
     const memberId = shapeIntoMongooseObject(member._id);
     const amount = input.reduce((accumulator: number, item: OrderItemInput) => {
-      return accumulator + item.itemPrice * item.itemQuantity;
+      return accumulator + item.itemSaledPrice > 0
+        ? item.itemSaledPrice
+        : item.itemPrice * item.itemQuantity;
     }, 0);
     // const delivery = amount < 100 ? 5 : 0;
     // console.log("values:", amount, delivery);
