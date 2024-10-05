@@ -46,7 +46,7 @@
                 <th scope="col">Course Mentor</th>
                 <th scope="col">Course Price($)</th>
                 <th scope="col">Course Saled Price($)</th>
-                <th scope="col">Courses Sold</th>
+                <th scope="col">Most Interested</th>
                 <th scope="col">Course Duration(hours)</th>
                 <th scope="col">Status</th>
               </tr>
@@ -60,7 +60,7 @@
               <td><%= value.courseMentor %></td>
               <td><%= value.coursePrice %></td>
               <td class="saled-price"><%= value.courseSaledPrice %></td>
-              <td><%= value.courseSold %></td>
+              <td><%= value.courseView %></td>
               <td><%= value.courseDuration %></td>
               <td>
                 <select class="spec-select new-product-status" id="<%= value._id %>">
