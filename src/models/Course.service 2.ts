@@ -51,7 +51,7 @@ class CourseService {
       ])
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
-    console.log("result:", result);
+    // console.log("result:", result);
     return result;
   }
 
@@ -190,7 +190,7 @@ class CourseService {
         (existingCourse.coursePrice * salePercent).toFixed(2)
       );
 
-      console.log("Calculated courseSaledPrice:", input.courseSaledPrice);
+      // console.log("Calculated courseSaledPrice:", input.courseSaledPrice);
     } else {
       input.courseSaledPrice = 0;
     }
@@ -208,7 +208,7 @@ class CourseService {
       throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
     }
 
-    console.log("Updated course:", result);
+    // console.log("Updated course:", result);
 
     return result as unknown as Course;
   }

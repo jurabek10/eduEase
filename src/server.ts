@@ -2,9 +2,14 @@ import dotenv from "dotenv";
 dotenv.config({
   path: process.env.NODE_ENV === "production" ? ".env.production" : ".env",
 });
+
 import mongoose from "mongoose";
 import server from "./app";
 
+// Set the Mongoose `strictQuery` behavior to avoid deprecation warnings
+mongoose.set("strictQuery", false);
+
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URL as string, {})
   .then((data) => {

@@ -208,7 +208,7 @@ class CourseService {
       throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
     }
 
-    console.log("Updated course:", result);
+    // console.log("Updated course:", result);
 
     return result as unknown as Course;
   }
